@@ -1,7 +1,7 @@
 # Matrix Block Sum
 Use basic search, time O(n^2*m^2),space O(1):
 
-```
+```python
 class Solution:
     def matrixBlockSum(self, mat: List[List[int]], K: int) -> List[List[int]]:
         a=[]
@@ -19,45 +19,37 @@ class Solution:
         return a
 ```
 
-Use prefix sum:
+Use prefix sum, time O(mn) space o(mn):
 
-```java
-class Solution {
-    public int[][] matrixBlockSum(int[][] mat, int K) {
-        int h = mat.length, w = mat[0].length;
-        // 为了不用考虑边界，设置prefixSum为 h+1 * w+1。
-        // 对应的位置关系为 prefixSum[i][j] 记录 mat[0][0] -> mat[i-1][j-1]的和
-        int[][] prefixSum = new int[h+1][w+1];
-        
-        int[][] ans = new int[h][w];
-
-        for(int i = 1;i <= h;i++){
-            for(int j = 1;j <= w;j++){
-                prefixSum[i][j] = prefixSum[i][j-1] + prefixSum[i-1][j] 
-                                    - prefixSum[i-1][j-1]+ mat[i-1][j-1];
-            }
-        }
-
-        for(int i = 0;i <  h;i++){
-            for(int j = 0;j < w;j++){
-            	/* 可以推出 ans[i][j]与前缀和关系:
-            	* ans[i][j] = prefixSum[i+1+k][j+1+k] + prefixSum[i+1-k][j+1-k]
-            	*             - prefixSum[i+1-k][j+1+k] - prefixSum[i+1+k][j+1-k]
-            	* 具体需要根据边界做调整。
-            	*/
-                int x1 =Math.min(j+1+K,w), y1=Math.min(i+1+K,h);
-                int x2 =Math.min(j+1+K,w), y2=Math.max(i-K,0);
-                int x3 =Math.max(j-K,0), y3=Math.min(i+1+K,h);
-                int x4 =Math.max(j-K,0), y4=Math.max(i-K,0);
-
-                ans[i][j] = prefixSum[y1][x1] + prefixSum[y4][x4] 
-                            - prefixSum[y2][x2] - prefixSum[y3][x3];
-            }
-        }
-
-        return ans;
-    }
-}
+```python
+class Solution:
+    def matrixBlockSum(self, mat: List[List[int]], K: int) -> List[List[int]]:
+        m=len(mat)
+        n=len(mat[0])
+        psum=[[0]*n for _ in range(m)]
+        dp=[[0]*n for _ in range(m)]
+        for i in range(m):
+            s=0
+            for j in range(n):
+                s+=mat[i][j]
+                if(i>0):
+                    psum[i][j]=s+psum[i-1][j]
+                else:
+                    psum[i][j]=s
+        for i in range(m):
+            for j in range(n):
+                r1_low=i-K
+                r2_low=j-K
+                r1_high=min(i+K,m-1)
+                r2_high=min(j+K,n-1)
+                dp[i][j]=psum[r1_high][r2_high]
+                if(r1_low>0):
+                    dp[i][j]-=psum[r1_low-1][r2_high]
+                if(r2_low>0):
+                    dp[i][j]-=psum[r1_high][r2_low-1]
+                if(r1_low>0 and r2_low>0):
+                    dp[i][j]+=psum[r1_low-1][r2_low-1]
+        return dp
 ```
 
-both space and time : O(mn)
+踩坑的地方是，没有注意到做减法时候r1_low、r2_low应该-1，其实可以更改r1_low,r2_low来解决。
