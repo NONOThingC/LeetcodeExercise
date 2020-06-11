@@ -121,7 +121,7 @@ class Solution {
     public int longestConsecutive(int[] nums) {
         int len = nums.length;
         if(len == 0) return 0;
-        parent = new int[len];  
+        parent = new int[len];
         size = new int[len];
         Arrays.fill(size,1);
         for(int i = 0;i < len;i++) {

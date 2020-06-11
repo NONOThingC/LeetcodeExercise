@@ -8,6 +8,9 @@ Because K>0, so the head sequence and tail sequence may be concated.
 
 ![](%202020-06-10-14-54-00.png)
 3. if psum==0 in middle element, then answer=max(prefix_sum_after,max_before)
+
+This algorithm cost time O(n),space O(1).
+
 ```python
 class Solution:
 
@@ -39,7 +42,7 @@ class Solution:
 
 ```
 
-And there is another solution, cause two sequence need to identify, then just add sum(arr)*(k-2):
+And there is another solution: just two sequence need to identify, then just add sum(arr)*(k-2):
 ```python
 class Solution:
     def kConcatenationMaxSum(self, arr: List[int], k: int) -> int:
@@ -59,8 +62,23 @@ class Solution:
         
         for num in arr :
             curr += num
-            if curr < 0 : curr = 0
-            if curr > max_ : max_ = curr
-        
+            if curr < 0 : 
+                curr = 0
+            if curr > max_ : 
+                max_ = curr
         return max_
 ```
+
+Another solution from [cenkay](https://leetcode.com/problems/k-concatenation-maximum-sum/discuss/382808/Python3-6-liner-Kadane):
+```python
+class Solution:
+    def kConcatenationMaxSum(self, arr: List[int], k: int, mod = 10 ** 9 + 7) -> int:
+        def Kadane(arr, res = 0, cur = 0):
+            for num in arr:
+                cur = max(num, num + cur)
+                res = max(res, cur)
+            return res
+        return ((k - 2) * max(sum(arr), 0) + Kadane(arr * 2)) % mod if k > 1 else Kadane(arr) % mod
+```
+
+Both solution use arr*2. And in this answer when cur<0 set cur=0 is unnecessarry, because when we find two sequence, we need true negative prefix sum, which is guarded by res = max(res, cur).

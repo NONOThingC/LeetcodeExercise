@@ -1,0 +1,1 @@
+Because hard problem often have multiple solution and sometimes require time or space effection. So we divide every hard problem into different folder.
