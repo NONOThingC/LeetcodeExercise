@@ -92,3 +92,61 @@ class UnionFind():
 
 
 ```
+
+java:
+
+```java
+class Solution {
+    HashMap<Integer, Integer> map  = new HashMap<Integer, Integer>();
+
+    int maxSize = 1;
+    int[] size; // the size of the each component.
+    int[] parent; // the parent of each element.
+    public int longestConsecutive(int[] nums) {
+        int len = nums.length;
+        if(len == 0) return 0;
+        parent = new int[len];
+        size = new int[len];
+        Arrays.fill(size,1);
+        for(int i = 0;i < len;i++) {
+           if(map.containsKey(nums[i])){
+                continue;
+            }
+            map.put(nums[i], i);
+            parent[i] = i;
+            if(map.containsKey(nums[i] - 1)){
+                unite(i, map.get(nums[i] - 1));
+            }
+            if(map.containsKey(nums[i] + 1)){
+                unite(i, map.get(nums[i] + 1));
+            }
+        }
+        return maxSize;
+    }
+
+    public int find(int x) {
+        int par = parent[x], grandPar = parent[par];
+        if(par == x) return x;
+        parent[x] = grandPar; 
+        return find(grandPar);
+    }
+
+    public void unite(int a, int b) {
+        int rootA = find(a), rootB = find(b);
+        if(rootA == rootB) return ;
+        int small = rootA, big = rootB;
+        if(size[rootA] > size[rootB]){
+            small = rootB;
+            big = rootA;
+        }
+        
+        // unite two trees;
+        parent[small] = big;
+        size[big] += size[small];
+
+        if(size[big] > maxSize) maxSize = size[big];
+    }
+    
+}
+```
+
