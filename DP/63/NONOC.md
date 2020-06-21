@@ -27,3 +27,5 @@ class Solution:
                 DP[i][j]=(DP[max(i-1,0)][j]*(obstacleGrid[max(i-1,0)][j]==0)+DP[i][max(j-1,0)]*(obstacleGrid[i][max(j-1,0)]==0))*(obstacleGrid[i][j]==0)
         return DP[m-1][n-1]
 ```
+
+Because this problem space just occupys in top and left so we can just use O(1) space to solve this problem.
