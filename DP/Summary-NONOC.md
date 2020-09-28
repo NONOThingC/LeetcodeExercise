@@ -5,3 +5,6 @@
 3. 假定为字符的末尾。LIS问题(300).
 4. 假定为字符串本身的一些特点。
 5. 假定为i:j.
+
+## 别人提出的宝贵资料
+https://leetcode.com/problems/target-sum/discuss/455024/DP-IS-EASY!-5-Steps-to-Think-Through-DP-Questions.
