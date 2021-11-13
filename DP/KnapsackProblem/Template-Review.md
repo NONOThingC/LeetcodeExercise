@@ -14,7 +14,7 @@ for i=1:N:
 ```
 for i=1:N:
     for v=V:ci:
-        F[i,v]=max(F(i-1,v),F(i-1,v-ci)+wi)
+        F[v]=max(F(v),F(v-ci)+wi)
 ```
 
 # 完全背包问题
