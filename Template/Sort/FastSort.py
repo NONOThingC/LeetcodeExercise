@@ -5,7 +5,7 @@ def quick_sort(array, l, r):
         quick_sort(array, l, q - 1)
         quick_sort(array, q + 1, r)
  
-def partition(array, l, r):
+def partition(array, l, r):#左右都是闭区间，但是用r来自作为分割元素
     x = array[r]
     i = l - 1
     for j in range(l, r):

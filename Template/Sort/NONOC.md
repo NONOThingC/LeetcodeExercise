@@ -91,3 +91,24 @@ class Merge {
     }
 }
 ```
+
+
+## 计数排序
+
+```python
+citations=[2,1,5,7,2,3,1,6,0]
+score2cnt=[0]*(max(citations)+1)
+for citation in citations:
+    score2cnt[citation]+=1
+s2cum_cnt=[0]*(max(citations)+1)
+s2cum_cnt[0]=score2cnt[0]
+for i in range(1,len(score2cnt)):
+    s2cum_cnt[i]=s2cum_cnt[i-1]+score2cnt[i]
+
+# 建立好累积次数的映射关系后，就可以将倒着来看该把哪个元素放哪里
+ans=[0]*len(citations)
+for i in range(len(citations)-1,-1,-1):
+    ele=citations[i]
+    s2cum_cnt[ele]-=1# 减1建立与index的映射
+    ans[s2cum_cnt[ele]]=citations[i]#因为累积有多少个就代表需要把这个元素放在哪里
+```

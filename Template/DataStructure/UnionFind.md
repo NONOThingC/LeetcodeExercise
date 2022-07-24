@@ -89,8 +89,6 @@ class UnionFind():
         """
         return self.find_root(x)==self.find_root(y)
 
-
-
 ```
 
 java:

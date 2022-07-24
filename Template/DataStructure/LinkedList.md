@@ -84,7 +84,7 @@ class SingleLinkList(object):
     def remove(self, item):
         """删除节点"""
         cur = self._head
-        pre = None
+        pre = None 
         while cur is not None:
             # 找到指定元素
             if cur.item == item:
