@@ -153,3 +153,39 @@ class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         return True if self.topoBFS(numCourses, prerequisites) else False
 ```
+
+无向图模板
+```python
+import math
+
+def solution(A, B):
+    id = max(max(A), max(B))
+    num = id + 1
+    adj = [[] for _ in range(num)]
+    deg = [0] * (num)
+    len_A = len(A)
+    num_people = [1] * (num)
+    for i in range(len_A):
+        deg[A[i]] += 1
+        deg[B[i]] += 1
+        adj[A[i]].append(B[i])
+        adj[B[i]].append(A[i])
+    deg_one = []
+    valid = [True] * num
+    for node_id, d in enumerate(deg):
+        if d == 1 and node_id != 0:
+            deg_one.append(node_id)
+    ans = 0
+    while len(deg_one) > 0:
+        node_id = deg_one[-1]
+        deg_one.pop()
+        ans += (num_people[node_id] + 4) // 5
+        valid[node_id] = False
+        for neighbor in adj[node_id]:
+            if valid[neighbor]:
+                deg[neighbor] -= 1
+                num_people[neighbor] += num_people[node_id]
+                if deg[neighbor] == 1 and neighbor != 0:
+                    deg_one.append(neighbor)
+    return ans
+```

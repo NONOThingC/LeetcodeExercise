@@ -1,3 +1,8 @@
+极为优秀的二分法的解释：
+https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/solution/lan-hong-hua-fen-fa-dan-mo-ban-miao-sha-e7r40/
+
+二分法理解的几个要点就是由于left=mid+{-1,0,+1}造成指针最后位置的变化。+-1最后会造成指针越位，重叠，而+-0指针最后只会相邻。
+
 1. Pay attention to the opening and closing of the interval.
 
 ```python
@@ -202,7 +207,7 @@ def BS(check,target):
 #### 细节1：l为什么初始化为-1，r初始值为N？
 主要是为了handle check为全真或者全假的情况。
 
-#### 细节2：m是否始终处于[0,N)以内？
+#### 细节2：mid是否始终处于[0,N)以内？
 首先看最小值，根据`l+1<r`，l_min=-1,r_min=1,此时m_min=0;
 再看最大值，l_max=N-2,r_max=N,此时m_min=N-1;
 
@@ -224,7 +229,7 @@ def BS(check,target):
 
 `[check为真][check为假]`
 
-的形式,主意l和r要反过来。
+的形式,注意l和r要反过来。
 
 思考过程如下：
 
@@ -247,3 +252,93 @@ def BS(check,target):
 #### 例子选讲
 
 ![](%202022-04-04-13-30-10.png)
+
+1.
+```python
+nums=[1,2,3,5,5,5,8,9]
+def bs_search(nums):
+    l,r=-1,len(nums)
+    while l+1<r:
+        mid=l+(r-l)//2
+        if nums[mid]>=5:
+            r=mid
+        else:
+            l=mid
+    return r
+a=bs_search(nums)
+```
+
+2.
+```python
+nums=[1,2,3,5,5,5,8,9]
+def bs_search(nums):
+    l,r=-1,len(nums)
+    while l+1<r:
+        mid=l+(r-l)//2
+        if nums[mid]>=5:
+            r=mid
+        else:
+            l=mid
+    return l
+a=bs_search(nums)
+```
+
+3.
+```python
+nums=[1,2,3,5,5,5,8,9]
+def bs_search(nums):
+    l,r=-1,len(nums)
+    while l+1<r:
+        mid=l+(r-l)//2
+        if nums[mid]>5:
+            r=mid
+        else:
+            l=mid
+    return r
+a=bs_search(nums)
+```
+
+4.
+```python
+nums=[1,2,3,5,5,5,8,9]
+def bs_search(nums):
+    l,r=-1,len(nums)
+    while l+1<r:
+        mid=l+(r-l)//2
+        if nums[mid]<=5:
+            l=mid
+        else:
+            r=mid
+    return l
+a=bs_search(nums)
+```
+
+5. 寻找大于等于9的第一个元素
+```python
+nums=[1,2,3,5,5,5,8,9]
+def bs_search(nums):
+    l,r=-1,len(nums)
+    while l+1<r:
+        mid=l+(r-l)//2
+        if nums[mid]>=9:
+            r=mid
+        else:
+            l=mid
+    return r
+a=bs_search(nums)
+```
+
+6.寻找大于9的第一个元素
+```python
+nums=[1,2,3,5,5,5,8,9]
+def bs_search(nums):
+    l,r=-1,len(nums)
+    while l+1<r:
+        mid=l+(r-l)//2
+        if nums[mid]>9:
+            r=mid
+        else:
+            l=mid
+    return r
+a=bs_search(nums)
+```

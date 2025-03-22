@@ -1,0 +1,1 @@
+# this folder is for fast write leetcode solution.
